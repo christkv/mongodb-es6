@@ -1,14 +1,31 @@
 "use strict";
 
 var MongoDBTopologyFilter = function() {
-  // Keep the server config
   var serverConfig = null;
 
   this.beforeStart = function(object, callback) {
-    // Use the provided environment for the filtering
-    serverConfig = 'single';
-    // Finish up
-    callback();
+    // Get the first configuration
+    var configuration = object.configurations[0];
+    
+    // Get the MongoDB topology
+    configuration.newConnection(function(err, connection) {
+      // Run the ismaster command
+      connection.command('system.$cmd', {ismaster:true}, function(err, command) {
+        if(err) return callback(err, null);
+        // Check for topology
+        if(Array.isArray(command.result.hosts)) {
+          serverConfig = 'replicaset';
+        } else if(command.result.msg && command.result.msg == 'isdbgrid') {
+          serverConfig = 'mongos';
+        } else {
+          serverConfig = 'single';
+        }
+
+        // Close the connection
+        connection.destroy();
+        callback();
+      });
+    });
   }
 
 	this.filter = function(test) {
