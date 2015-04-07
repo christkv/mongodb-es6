@@ -149,6 +149,7 @@ var testFiles =[
     '/test/functional/db_tests.js'
   , '/test/functional/collection_tests.js'
   , '/test/functional/mongoclient_tests.js'
+  , '/test/functional/cursor_tests.js'
 ]
 
 // Add all the tests to run
