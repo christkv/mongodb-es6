@@ -55,9 +55,9 @@ exports['Should correctly iterate over cursor'] = {
       var docs = [];
 
       // Return
-      while(true) {
+      while(yield cursor.hasNext()) {
         var doc = yield cursor.next();
-        if(doc == null) break;
+        // if(doc == null) break;
         docs.push(doc);
       }
 
