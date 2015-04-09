@@ -272,3 +272,40 @@ exports['Should correctly iterate over cursor'] = {
     });
   }
 }
+
+exports['Should correctly stream cursor'] = {
+  metadata: { requires: { } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var MongoClient = require('../..').MongoClient;
+
+    co(function* () {
+      // Connect
+      var client = yield new MongoClient('mongodb://localhost:27017/test', {}).connect()
+      // Drop the collection
+      try { yield client['tests']['cursors'].drop(); } catch(err){}
+      // Execute multiple inserts
+      var result = yield client['tests']['cursors'].insertMany([{a:2}, {a:3}]);
+
+      // Set the cursor
+      var cursor = client['tests']['cursors'].find({});
+      var docs = [];
+
+      // var docs = [];
+      cursor.on('data', function(doc) {
+        docs.push(doc);
+      });
+
+      cursor.on('end', function() {
+        test.equal(2, docs.length);
+
+        client.close();
+        test.done();
+      });
+    }).catch(function(err) {
+      console.log(err.stack)
+      test.done();
+    });
+  }
+}
