@@ -1,3 +1,5 @@
+"use strict";
+
 var co = require('co');
 
 exports['Should correctly connect to MongoDB using MongoClient ES6 promise'] = {

@@ -1,3 +1,5 @@
+"use strict";
+
 exports['Should correctly connect to MongoDB using MongoClient ES6 promise'] = {
   metadata: { requires: { } },
 

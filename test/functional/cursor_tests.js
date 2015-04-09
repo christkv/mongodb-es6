@@ -157,7 +157,7 @@ exports['Should correctly exercise all methods on cursor before explain'] = {
       // Total number of docs available
       test.ok(doc != null);
       test.equal('tests', client['tests']['cursors'].find({}).namespace.database);
-      test.equal('tests', client['tests']['cursors'].find({}).namespace.collection);
+      test.equal('cursors', client['tests']['cursors'].find({}).namespace.collection);
       client.close();
       test.done();
     }).catch(function(err) {
