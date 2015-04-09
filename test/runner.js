@@ -152,6 +152,7 @@ var testFiles =[
   , '/test/functional/cursor_tests.js'
   , '/test/functional/crud_tests.js'
   , '/test/functional/aggregation_tests.js'
+  , '/test/functional/index_tests.js'
 ]
 
 // Add all the tests to run
