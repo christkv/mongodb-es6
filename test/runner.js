@@ -53,40 +53,43 @@ var Configuration = function(options) {
 
     return {
       start: function(callback) {
-        var self = this;
-        if(skipStart) return callback();
-        // Start the db
-        manager.start({purge:true, signal: -9}, function(err) {
-          var server = topology(self, mongo);
-          // Set up connect
-          server.once('connect', function() {
-            // Drop the database
-            server.command(f("%s.$cmd", self.db), {dropDatabase: 1}, function(err, r) {
-              server.destroy();
-              callback();
-            });
-          });
+        callback();
+        // var self = this;
+        // if(skipStart) return callback();
+        // // Start the db
+        // manager.start({purge:true, signal: -9}, function(err) {
+        //   var server = topology(self, mongo);
+        //   // Set up connect
+        //   server.once('connect', function() {
+        //     // Drop the database
+        //     server.command(f("%s.$cmd", self.db), {dropDatabase: 1}, function(err, r) {
+        //       server.destroy();
+        //       callback();
+        //     });
+        //   });
 
-          // Connect
-          server.connect();
-        });
+        //   // Connect
+        //   server.connect();
+        // });
       },
 
       stop: function(callback) {
-        if(skipTermination) return callback();
-        manager.stop({signal: -15}, function() {
-          callback();
-        });
+        callback();
+        // if(skipTermination) return callback();
+        // manager.stop({signal: -15}, function() {
+        //   callback();
+        // });
       },
 
       restart: function(options, callback) {
-        if(typeof options == 'function') callback = options, options = {purge:true, kill:true};
+        callback();
+        // if(typeof options == 'function') callback = options, options = {purge:true, kill:true};
 
-        manager.restart(options, function() {
-          setTimeout(function() {
-            callback();
-          }, 1000);
-        });
+        // manager.restart(options, function() {
+        //   setTimeout(function() {
+        //     callback();
+        //   }, 1000);
+        // });
       },
 
       setup: function(callback) {
@@ -101,30 +104,30 @@ var Configuration = function(options) {
         return options.url || 'mongodb://localhost:27017/test';
       },
 
-      newTopology: function(options, callback) {
-        if(typeof options == 'function') {
-          callback = options;
-          options = {};
-        }
+      // newTopology: function(options, callback) {
+      //   if(typeof options == 'function') {
+      //     callback = options;
+      //     options = {};
+      //   }
 
-        callback(null, topology(this, mongo));
-      },
+      //   callback(null, topology(this, mongo));
+      // },
 
-      newConnection: function(options, callback) {
-        if(typeof options == 'function') {
-          callback = options;
-          options = {};
-        }
+      // newConnection: function(options, callback) {
+      //   if(typeof options == 'function') {
+      //     callback = options;
+      //     options = {};
+      //   }
 
-        var server = topology(this, mongo);
-        // Set up connect
-        server.once('connect', function() {
-          callback(null, server);
-        });
+      //   var server = topology(this, mongo);
+      //   // Set up connect
+      //   server.once('connect', function() {
+      //     callback(null, server);
+      //   });
 
-        // Connect
-        server.connect();
-      },
+      //   // Connect
+      //   server.connect();
+      // },
 
       // Additional parameters needed
       require: mongo,
@@ -153,6 +156,8 @@ var testFiles =[
   , '/test/functional/crud_tests.js'
   , '/test/functional/aggregation_tests.js'
   , '/test/functional/index_tests.js'
+  // , '/test/functional/replset_tests.js'  
+  // , '/test/functional/mongos_tests.js'  
 ]
 
 // Add all the tests to run
@@ -160,12 +165,12 @@ testFiles.forEach(function(t) {
   if(t != "") runner.add(t);
 });
 
-// Add a Node version plugin
-runner.plugin(new NodeVersionFilter());
-// Add a MongoDB version plugin
-runner.plugin(new MongoDBVersionFilter());
-// Add a Topology filter plugin
-runner.plugin(new MongoDBTopologyFilter());
+// // Add a Node version plugin
+// runner.plugin(new NodeVersionFilter());
+// // Add a MongoDB version plugin
+// runner.plugin(new MongoDBVersionFilter());
+// // Add a Topology filter plugin
+// runner.plugin(new MongoDBTopologyFilter());
 
 // Exit when done
 runner.on('exit', function(errors, results) {

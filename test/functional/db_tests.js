@@ -36,8 +36,7 @@ exports['Should correctly execute insert against multiple databases'] = {
       // Connect
       var client = yield new MongoClient('mongodb://localhost:27017/test', {}).connect()
       // Drop the database
-      var result = yield client['tests'].drop();
-      test.equal('tests', result.result.dropped);
+      try { yield client['tests'].drop(); } catch(err){}
       // Execute single insert
       var result = yield client['tests']['documents'].insertOne({a:1});
       // Execute multiple inserts
