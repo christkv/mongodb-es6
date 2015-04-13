@@ -1,8 +1,9 @@
 1.0.0
 ------------------------
-- Implements CRUD specification and Index Management specification
-- Uses Promises
+- Implements CRUD specification and Index Management specification.
+- Returns promises for all methods.
+- Replset Mongoclient and Mongos Mongoclient support.
+- Supports authentication using MongoClient.
 
 TODO
-- Replset Mongoclient and Mongos Mongoclient support
 - Choose your own Compatible Promise library like Bluebird

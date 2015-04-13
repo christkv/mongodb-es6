@@ -30,6 +30,7 @@
     , "semver": "~4.3"
     , "mkdirp": "0.5.0"
     , "rimraf": "2.2.6"
+    , "bluebird": "2.9.24"
   },
   "author": "Christian Kvalheim",
   "license": "Apache 2.0",
