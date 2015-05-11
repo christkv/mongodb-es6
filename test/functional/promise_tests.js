@@ -12,9 +12,7 @@ exports['Should correctly insert documents using Bluebird promise library'] = {
 
     co(function* () {
       // Connect
-      var client = yield new MongoClient('mongodb://localhost:27017/test', {
-        promise: P
-      }).promiseLibrary(P).connect()
+      var client = yield new MongoClient('mongodb://localhost:27017/test').promiseLibrary(P).connect();
       // Drop the collection
       try { 
         yield client['tests']['documents'].drop(); 
