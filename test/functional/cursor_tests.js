@@ -252,9 +252,8 @@ exports['Should correctly iterate over cursor'] = {
       var docs = [];
 
       // Return
-      while(cursor.hasNext()) {
-        var doc = yield cursor.next();
-        // if(doc == null) break;
+      while(yield cursor.hasNext()) {
+        var doc = cursor.next();
         docs.push(doc);
       }
 
@@ -268,8 +267,8 @@ exports['Should correctly iterate over cursor'] = {
       var docs = [];
 
       // Return
-      while(cursor.hasNext()) {
-        var doc = yield cursor.next();
+      while(yield cursor.hasNext()) {
+        var doc = cursor.next();
         // if(doc == null) break;
         docs.push(doc);
       }
