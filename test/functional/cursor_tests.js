@@ -253,7 +253,7 @@ exports['Should correctly iterate over cursor'] = {
 
       // Return
       while(yield cursor.hasNext()) {
-        var doc = cursor.next();
+        let doc = yield cursor.next();
         docs.push(doc);
       }
 
@@ -266,10 +266,10 @@ exports['Should correctly iterate over cursor'] = {
       var cursor = client['tests']['cursors'].find({}).batchSize(2);
       var docs = [];
 
-      // Return
-      while(yield cursor.hasNext()) {
-        var doc = cursor.next();
-        // if(doc == null) break;
+      // Hold the cursor result
+      let doc = null;
+      // Iterate using the next function only
+      while((doc = yield cursor.next()) != null) {
         docs.push(doc);
       }
 
